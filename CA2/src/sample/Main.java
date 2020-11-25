@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -20,10 +22,13 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-        Politician politician1 = new Politician("john", "2/11/2111", "" )
+        Politician politician1 = new Politician("john", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
 
 
-        Politician[] addElements = {politician1, }
+        Politician[] addElements = {politician1};
+
+
+
     }
 
 
