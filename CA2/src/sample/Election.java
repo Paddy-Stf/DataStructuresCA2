@@ -1,6 +1,7 @@
 package sample;
 
 public class Election {
+
     private  String  electionType;
     private String electionLocation;
     private  String electionDate;

@@ -19,6 +19,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
+        Politician politician1 = new Politician("john", "2/11/2111", "" )
+
+
+        Politician[] addElements = {politician1, }
     }
 
 

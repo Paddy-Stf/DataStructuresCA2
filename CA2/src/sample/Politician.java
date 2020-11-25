@@ -6,13 +6,12 @@ package sample;
 
 public class Politician {
 
-    private String politicianName, politicianDOB, politicianParty, politicianCounty;
+    private String politicianName, politicianDOB, politicianCounty;
     private String politicianCurrentParty, politicianPreviousParty, politicianImage;
 
     public Politician(String politicianName, String politicianDOB, String politicianParty, String politicianCounty, String politicianCurrentParty, String politicianPreviousParty, String politicianImage) {
         this.politicianName = politicianName;
         this.politicianDOB = politicianDOB;
-        this.politicianParty = politicianParty;
         this.politicianCounty = politicianCounty;
         this.politicianCurrentParty = politicianCurrentParty;
         this.politicianPreviousParty = politicianPreviousParty;
@@ -39,13 +38,6 @@ public class Politician {
         this.politicianDOB = politicianDOB;
     }
 
-    public String getPoliticianParty() {
-        return politicianParty;
-    }
-
-    public void setPoliticianParty(String politicianParty) {
-        this.politicianParty = politicianParty;
-    }
 
     public String getPoliticianCounty() {
         return politicianCounty;
