@@ -76,7 +76,6 @@ public class Politician {
         return "Politician{" +
                 "politicianName='" + politicianName + '\'' +
                 ", politicianDOB='" + politicianDOB + '\'' +
-                ", politicianParty='" + politicianParty + '\'' +
                 ", politicianCounty='" + politicianCounty + '\'' +
                 ", politicianCurrentParty='" + politicianCurrentParty + '\'' +
                 ", politicianPreviousParty='" + politicianPreviousParty + '\'' +

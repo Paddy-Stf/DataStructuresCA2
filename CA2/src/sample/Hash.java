@@ -3,7 +3,6 @@ package sample;
 public class Hash {
 
     Politician[] thePoliticians = null;
-    int arraySize;
     int itemsInArray = 0;
 
 
@@ -30,7 +29,7 @@ public class Hash {
             System.out.println("Collision Try " + hashIndex + " Instead");
 
             // If we get to the end of the array go back to index 0
-            hashIndex %= arraySize;
+            hashIndex %= k;
 
         }
 
