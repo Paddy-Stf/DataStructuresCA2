@@ -89,13 +89,12 @@ public class Controller {
          System.out.println("button works");
          Politician politician = new Politician("j", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
          Politician politician2 = new Politician("john", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
-         Politician politician3 = new Politician("michael", "2/11/2111", "ggggggg" , "ffffffffff", "fi
-         ne gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
+         Politician politician3 = new Politician("michael", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
 
-
-         hash.politicianHashFunction(politician, hash.thePoliticians);
-         hash.politicianHashFunction(politician3, hash.thePoliticians);
-         hash.politicianHashFunction(politician2, hash.thePoliticians);
+         hash.fill(hash.politiciansArray);
+         hash.politicianHashFunction(politician, hash.politiciansArray);
+         hash.politicianHashFunction(politician3, hash.politiciansArray);
+         hash.politicianHashFunction(politician2, hash.politiciansArray);
 
 
 
