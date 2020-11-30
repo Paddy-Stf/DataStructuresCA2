@@ -7,10 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private static Hash hash;
-
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -25,16 +21,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
-
-
-        Politician politician1 = new Politician("john", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
-
-        hash.politicianHashFunction(politician1, hash.thePoliticians);
-        hash.displayTheStack();
-
-
-
 
     }
 
