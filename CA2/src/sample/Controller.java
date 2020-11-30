@@ -91,6 +91,7 @@ public class Controller {
          Politician politician2 = new Politician("john", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
          Politician politician3 = new Politician("michael", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
 
+
          hash.fill(hash.politiciansArray);
          hash.politicianHashFunction(politician, hash.politiciansArray);
          hash.politicianHashFunction(politician3, hash.politiciansArray);

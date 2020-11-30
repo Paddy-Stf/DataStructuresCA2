@@ -39,29 +39,11 @@ public class Hash {
             }
             politiciansArray[hashIndex] = politician;
             currentSize++;
+            reHash();
         }
 
 
     public void reHash() {
-        int hashIndex = -1;
-        if (currentSize == arraySize) {
-
-            Politician[] temp = politiciansArray;
-            politiciansArray = new Politician[arraySize * 2];
-
-
-            for (int i = 0; i < arraySize * 2; i++) {
-               fill(politiciansArray);
-            }
-            arraySize *= 2;
-            currentSize = 0;
-
-            for(int i = 0; i < temp.length; i++){
-
-
-            }
-        }
-
 
         if (currentSize/arraySize > 0.75) {
 
