@@ -1,10 +1,18 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Arrays;
+
 public class Controller {
+
+
+       Hash hash = new Hash();
+
+
     @FXML
     public TextField politicianName;
     @FXML
@@ -75,4 +83,26 @@ public class Controller {
     public Button load;
     @FXML
     public Button reset;
+
+
+     public  void addPolitician(ActionEvent actionEvent){
+         System.out.println("button works");
+         Politician politician = new Politician("j", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
+         Politician politician2 = new Politician("john", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
+         Politician politician3 = new Politician("michael", "2/11/2111", "ggggggg" , "ffffffffff", "fine gael", "sinn hhhh", "78y74fh4fh4hfh4fhfhfhfhfhfhf");
+
+
+         hash.politicianHashFunction(politician, hash.thePoliticians);
+         hash.politicianHashFunction(politician3, hash.thePoliticians);
+         hash.politicianHashFunction(politician2, hash.thePoliticians);
+
+
+
+
+     }
+
+
+
+
+
 }
