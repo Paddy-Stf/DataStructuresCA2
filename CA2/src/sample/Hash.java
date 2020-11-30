@@ -18,11 +18,9 @@ public class Hash {
         int hashIndex = -1;
 
 
-
-
             for (int i = 0; i < politician.getPoliticianName().length(); i++) {
                 hashIndex = hashIndex + politician.getPoliticianName().charAt(i);
-                currentSize++;
+
             }
             hashIndex = hashIndex % arraySize;
 
@@ -40,19 +38,45 @@ public class Hash {
 
             }
             politiciansArray[hashIndex] = politician;
-
+            currentSize++;
         }
 
 
     public void reHash() {
         int hashIndex = -1;
         if (currentSize == arraySize) {
-            Politician[] reHashPolitician = new Politician[arraySize * 2];
 
-            for (int i = 0; i < reHashPolitician.length; i++) {
+            Politician[] temp = politiciansArray;
+            politiciansArray = new Politician[arraySize * 2];
+
+
+            for (int i = 0; i < arraySize * 2; i++) {
+               fill(politiciansArray);
+            }
+            arraySize *= 2;
+            currentSize = 0;
+
+            for(int i = 0; i < temp.length; i++){
+
 
             }
         }
+
+
+        if (currentSize/arraySize > 0.75) {
+
+            Politician[] temp = politiciansArray;
+            arraySize=arraySize+15;
+            politiciansArray = new Politician[arraySize];
+            fill(politiciansArray);
+            currentSize = 0;
+
+            for(int i = 0; i < temp.length; i++){
+                politiciansArray[i]= temp[i];
+            }
+
+        }
+
     }
 
 
