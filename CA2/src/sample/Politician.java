@@ -1,15 +1,11 @@
 package sample;
 
-/**
- * Responsible for object politician and parameters of class.
- */
-
 public class Politician {
 
     private String politicianName, politicianDOB, politicianCounty;
     private String politicianCurrentParty, politicianPreviousParty, politicianImage;
 
-    public Politician(String politicianName, String politicianDOB, String politicianParty, String politicianCounty, String politicianCurrentParty, String politicianPreviousParty, String politicianImage) {
+    public Politician(String politicianName, String politicianDOB, String politicianCounty, String politicianCurrentParty, String politicianPreviousParty, String politicianImage) {
         this.politicianName = politicianName;
         this.politicianDOB = politicianDOB;
         this.politicianCounty = politicianCounty;

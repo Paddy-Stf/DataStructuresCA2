@@ -1,8 +1,18 @@
 package sample;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Hash {
+    Politician politician;
+    Election election;
 
     int politicianCurrentSize = 0;
     int politicianArraySize = 31;
@@ -17,7 +27,7 @@ public class Hash {
 
 
     public void politicianHashFunction(Politician politician, Politician[] politiciansArray) {
-
+        fillPolitician();
 
         int pHashIndex = -1;
 
@@ -101,7 +111,7 @@ public class Hash {
 /////////////////// ELECTION HASH FUNCTION ETC.
 
     public void electionHashFunction(Election election, Election[] electionsArray) {
-
+        fillElection();
 
         int eHashIndex = -1;
 
@@ -180,6 +190,38 @@ public class Hash {
     public void fillElection(){
         Election p = null;
         Arrays.fill(politiciansArray, p);
+    }
+
+
+    public void savePoliticians() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("Politicians.xml"));
+        out.writeObject(politiciansArray);
+        out.close();
+    }
+
+
+    public void loadPoliticians() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("Politicians.xml"));
+        politiciansArray = (Politician[]) is.readObject();
+
+        is.close();
+    }
+
+    public void saveElections() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("Elections.xml"));
+        out.writeObject(electionsArray);
+        out.close();
+    }
+
+
+    public void loadElections() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("Elections.xml"));
+        electionsArray = (Election[]) is.readObject();
+        is.close();
     }
 
 
