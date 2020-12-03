@@ -8,6 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.FileReader;
@@ -19,8 +22,11 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-Politician politician;
+    Politician politician;
     Hash hash = new Hash();
+    String[] listOfPoliticians = new String[hash.politicianCurrentSize];
+    String s="";
+    String x="x";
 
 
     @FXML
@@ -53,26 +59,49 @@ Politician politician;
         searchBy.getItems().addAll("Politician Name A-Z", "Election Year 2020-1990");
         politicianPreviousPartyList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         politicianPreviousPartyList.getItems().addAll("Fianna Fail", "Sinn Fein", " Fine Gael", "Green Party", "Labour Party", "Social Democrats", "Solidarity–People Before Profit", "Aontú Right To Change", "Independents", "Human Dignity Alliance", "Workers and Unemployed Action", "Workers Party", "Republican", "Independent Left", "Other");
+        for (int i = 0; i < hash.politiciansArray.length; i++) {
+            if (hash.politiciansArray[i] != null) {
+                s =  hash.politiciansArray[i].getPoliticianName() ;
+                candidateElectionChoice.getItems().addAll(s);
+            }
+        }
+
+
+
     }
 
 
     public void addPolitician(ActionEvent actionEvent) {
         hash.politicianHashFunction(readInPolitician(), hash.politiciansArray);
+
+        for (int i = 0; i < hash.politiciansArray.length; i++) {
+            if (hash.politiciansArray[i] != null) {
+                s =  hash.politiciansArray[i].getPoliticianName() ;
+                if (s != null && !x.equals(s)) {
+                    x=s;
+                    candidateElectionChoice.getItems().removeAll();
+                    candidateElectionChoice.getItems().add(s);
+                    System.out.println(s + "== " + x);
+
+
+                }
+            }
+        }
     }
 
     public void deletePolitician(ActionEvent actionEvent) {
-      Politician politicianToBeDeleted =  hash.findPoliticianKey(readInPolitician().getPoliticianName());
-      politicianToBeDeleted.setPoliticianCurrentParty(null);
-      politicianToBeDeleted.setPoliticianCounty(null);
-      politicianToBeDeleted.setPoliticianName(null);
-      politicianToBeDeleted.setPoliticianDOB(null);
-      politicianToBeDeleted.setPoliticianPreviousParty(null);
-      politicianToBeDeleted.setPoliticianImage(null);
+        Politician politicianToBeDeleted = hash.findPoliticianKey(readInPolitician().getPoliticianName());
+        politicianToBeDeleted.setPoliticianCurrentParty(null);
+        politicianToBeDeleted.setPoliticianCounty(null);
+        politicianToBeDeleted.setPoliticianName(null);
+        politicianToBeDeleted.setPoliticianDOB(null);
+        politicianToBeDeleted.setPoliticianPreviousParty(null);
+        politicianToBeDeleted.setPoliticianImage(null);
     }
 
 
     public void updatePolitician(ActionEvent actionEvent) {
-        Politician politicianToBeUpdated =  hash.findPoliticianKey(readInPolitician().getPoliticianName());
+        Politician politicianToBeUpdated = hash.findPoliticianKey(readInPolitician().getPoliticianName());
         politicianToBeUpdated.setPoliticianCurrentParty(politicianCurrentPartyChoice.getValue().toString());
         politicianToBeUpdated.setPoliticianCounty(politicianCountyChoice.getValue().toString());
         politicianToBeUpdated.setPoliticianName(politicianName.getText());
@@ -82,15 +111,12 @@ Politician politician;
     }
 
 
-
-
-
     public void addElection(ActionEvent actionEvent) {
         hash.electionHashFunction(readInElection(), hash.electionsArray);
     }
 
     public void deleteElection(ActionEvent actionEvent) {
-      Election electionToBeDeleted =  hash.findElectionKey(readInElection().getElectionType());
+        Election electionToBeDeleted = hash.findElectionKey(readInElection().getElectionType());
         electionToBeDeleted.setElectionDate(null);
         electionToBeDeleted.setElectionLocation(null);
         electionToBeDeleted.setElectionType(null);
@@ -98,19 +124,18 @@ Politician politician;
     }
 
     public void updateElection(ActionEvent actionEvent) {
-        Election electionToBeUpdated =  hash.findElectionKey(readInElection().getElectionType());
-        if (readInElection().getElectionLocation()==electionToBeUpdated.getElectionLocation()) {
+        Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionType());
+        if (readInElection().getElectionLocation() == electionToBeUpdated.getElectionLocation()) {
             electionToBeUpdated.setElectionDate(electionDate.getText());
             electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
             electionToBeUpdated.setElectionType(electionType.getValue().toString());
             electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
-        }
-        else  errorPopOut("No Election Matching Election Type & Location");
+        } else errorPopOut("No Election Matching Election Type & Location");
     }
 
 
     public void addCandidate(ActionEvent actionEvent) {
-    hash.candidateHashFunction(readInCandidate(),hash.candidatesArray);
+        hash.candidateHashFunction(readInCandidate(), hash.candidatesArray);
 
     }
 
@@ -129,7 +154,7 @@ Politician politician;
     }
 
     public Politician readInPolitician() {
-        return new Politician(politicianName.getText(), politicianDOB.getText(), politicianCountyChoice.getValue().toString(), politicianCurrentPartyChoice.getValue().toString(), politicianPreviousPartyList.getSelectionModel().getSelectedItems().toString() , politicianImage.getText());
+        return new Politician(politicianName.getText(), politicianDOB.getText(), politicianCountyChoice.getValue().toString(), politicianCurrentPartyChoice.getValue().toString(), politicianPreviousPartyList.getSelectionModel().getSelectedItems().toString(), politicianImage.getText());
     }
 
     public Election readInElection() {
@@ -142,13 +167,11 @@ Politician politician;
     }
 
 
-
     public void previewImage(ActionEvent actionEvent) {
         String URL = politicianImage.getText();
         Image preView = new Image(URL);
         preViewImage.setImage(preView);
     }
-
 
 
     public void searchBy(ActionEvent actionEvent) {
@@ -183,7 +206,7 @@ Politician politician;
         hash.loadCandidates();
     }
 
-    public static void errorPopOut(String r){
+    public static void errorPopOut(String r) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Input Error");
@@ -192,5 +215,6 @@ Politician politician;
 
         alert.showAndWait();
     }
+
 
 }
