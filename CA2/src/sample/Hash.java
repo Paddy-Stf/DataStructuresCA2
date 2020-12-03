@@ -293,6 +293,7 @@ public class Hash {
         is.close();
     }
 
+
     public void saveElections() throws Exception {
         XStream xstream = new XStream(new DomDriver());
         ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("Elections.xml"));

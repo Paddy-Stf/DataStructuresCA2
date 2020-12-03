@@ -14,6 +14,7 @@ package sample;
         this.candidateVotes = candidateVotes;
     }
 
+
     /**
      * Getters and Setters for fields of Candidate class.
      */

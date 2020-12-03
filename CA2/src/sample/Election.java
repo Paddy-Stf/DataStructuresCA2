@@ -30,6 +30,7 @@ public class Election {
         return numSeats;
     }
 
+
     public void setNumSeats(int numSeats) {
         this.numSeats = numSeats;
     }
