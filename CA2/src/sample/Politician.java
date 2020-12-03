@@ -2,8 +2,7 @@ package sample;
 
 public class Politician {
 
-    private String politicianName, politicianDOB, politicianCounty;
-    private String politicianCurrentParty, politicianPreviousParty, politicianImage;
+    private String politicianName, politicianDOB, politicianCounty , politicianCurrentParty, politicianPreviousParty, politicianImage;
 
     public Politician(String politicianName, String politicianDOB, String politicianCounty, String politicianCurrentParty, String politicianPreviousParty, String politicianImage) {
         this.politicianName = politicianName;

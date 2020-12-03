@@ -105,6 +105,26 @@ Politician politician;
         electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
     }
 
+
+    public void addCandidate(ActionEvent actionEvent) {
+    hash.candidateHashFunction(readInCandidate(),hash.candidatesArray);
+
+    }
+
+    public void deleteCandidate(ActionEvent actionEvent) {
+        Candidate candidateToBeDeleted = hash.findCandidateKey(readInCandidate().getCandidate().getPoliticianName());
+        candidateToBeDeleted.setCandidate(null);
+        candidateToBeDeleted.setCandidateVotes(-1);
+    }
+
+
+    public void updateCandidate(ActionEvent actionEvent) {
+        Candidate candidateToBeUpdated = hash.findCandidateKey(readInCandidate().getCandidate().getPoliticianName());
+        Politician newPolitician = hash.findPoliticianKey(candidateElectionChoice.getValue().toString());
+        candidateToBeUpdated.setCandidate(newPolitician);
+        candidateToBeUpdated.setCandidateVotes(Integer.parseInt(candidateVotes.getText()));
+    }
+
     public Politician readInPolitician() {
         return new Politician(politicianName.getText(), politicianDOB.getText(), politicianCountyChoice.getValue().toString(), politicianCurrentPartyChoice.getValue().toString(), politicianPreviousPartyList.getAccessibleText(), politicianImage.getText());
     }
@@ -118,17 +138,6 @@ Politician politician;
         return new Candidate(chosenPolitician, Integer.parseInt(candidateVotes.getText()));
     }
 
-
-    public void addCandidate(ActionEvent actionEvent) {
-
-    }
-
-    public void deleteCandidate(ActionEvent actionEvent) {
-    }
-
-
-    public void updateCandidate(ActionEvent actionEvent) {
-    }
 
 
     public void previewImage(ActionEvent actionEvent) {
