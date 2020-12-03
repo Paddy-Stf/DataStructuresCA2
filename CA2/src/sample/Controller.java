@@ -99,10 +99,13 @@ Politician politician;
 
     public void updateElection(ActionEvent actionEvent) {
         Election electionToBeUpdated =  hash.findElectionKey(readInElection().getElectionType());
-        electionToBeUpdated.setElectionDate(electionDate.getText());
-        electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
-        electionToBeUpdated.setElectionType(electionType.getValue().toString());
-        electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
+        if (readInElection().getElectionLocation()==electionToBeUpdated.getElectionLocation()) {
+            electionToBeUpdated.setElectionDate(electionDate.getText());
+            electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
+            electionToBeUpdated.setElectionType(electionType.getValue().toString());
+            electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
+        }
+        else  errorPopOut("No Election Matching Election Type & Location");
     }
 
 
@@ -126,7 +129,7 @@ Politician politician;
     }
 
     public Politician readInPolitician() {
-        return new Politician(politicianName.getText(), politicianDOB.getText(), politicianCountyChoice.getValue().toString(), politicianCurrentPartyChoice.getValue().toString(), politicianPreviousPartyList.getAccessibleText(), politicianImage.getText());
+        return new Politician(politicianName.getText(), politicianDOB.getText(), politicianCountyChoice.getValue().toString(), politicianCurrentPartyChoice.getValue().toString(), politicianPreviousPartyList.getSelectionModel().getSelectedItems().toString() , politicianImage.getText());
     }
 
     public Election readInElection() {
@@ -178,6 +181,16 @@ Politician politician;
         hash.loadElections();
         hash.loadPoliticians();
         hash.loadCandidates();
+    }
+
+    public static void errorPopOut(String r){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Input Error");
+        alert.setContentText(r);
+
+
+        alert.showAndWait();
     }
 
 }
