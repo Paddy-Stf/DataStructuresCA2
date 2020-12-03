@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class Hash {
     Politician politician;
     Election election;
+    Candidate candidate;
 
     int politicianCurrentSize = 0;
     int politicianArraySize = 31;
@@ -22,7 +23,9 @@ public class Hash {
     int electionArraySize = 31;
     Election[] electionsArray = new Election[electionArraySize];
 
-
+    int candidateCurrentSize = 0;
+    int candidateArraySize = 31;
+    Candidate[] candidatesArray = new Candidate[electionArraySize];
 
 
 
@@ -32,51 +35,48 @@ public class Hash {
         int pHashIndex = -1;
 
 
-            for (int i = 0; i < politician.getPoliticianName().length(); i++) {
-                pHashIndex = pHashIndex + politician.getPoliticianName().charAt(i);
+        for (int i = 0; i < politician.getPoliticianName().length(); i++) {
+            pHashIndex = pHashIndex + politician.getPoliticianName().charAt(i);
 
-            }
+        }
         pHashIndex = pHashIndex % politicianArraySize;
 
-            System.out.println("Modulus Index= " + pHashIndex + " for value " + politician);
+        System.out.println("Modulus Index= " + pHashIndex + " for value " + politician);
 
-            while (politiciansArray[pHashIndex] != null) {
+        while (politiciansArray[pHashIndex] != null) {
 
-                ++pHashIndex;
+            ++pHashIndex;
 
-                System.out.println("Collision Try " + pHashIndex + " Instead");
+            System.out.println("Collision Try " + pHashIndex + " Instead");
 
-                // If we get to the end of the array go back to index 0
+            // If we get to the end of the array go back to index 0
 
-                pHashIndex %= politicianArraySize;
+            pHashIndex %= politicianArraySize;
 
-            }
-            politiciansArray[pHashIndex] = politician;
-            politicianCurrentSize++;
-            reHashPolitician();
         }
+        politiciansArray[pHashIndex] = politician;
+        politicianCurrentSize++;
+        reHashPolitician();
+    }
 
 
     public void reHashPolitician() {
 
-        if (politicianCurrentSize/politicianArraySize > 0.75) {
+        if (politicianCurrentSize / politicianArraySize > 0.75) {
 
             Politician[] temp = politiciansArray;
-            politicianArraySize=politicianArraySize+15;
+            politicianArraySize = politicianArraySize + 15;
             politiciansArray = new Politician[politicianArraySize];
             fillPolitician();
             politicianCurrentSize = 0;
 
-            for(int i = 0; i < temp.length; i++){
-                politiciansArray[i]= temp[i];
+            for (int i = 0; i < temp.length; i++) {
+                politiciansArray[i] = temp[i];
             }
 
         }
 
     }
-
-
-
 
 
     public Politician findPoliticianKey(String key) {
@@ -103,7 +103,7 @@ public class Hash {
         return null;
     }
 
-    public void fillPolitician(){
+    public void fillPolitician() {
         Politician p = null;
         Arrays.fill(politiciansArray, p);
     }
@@ -143,24 +143,21 @@ public class Hash {
 
     public void reHashElection() {
 
-        if (electionCurrentSize/electionArraySize > 0.75) {
+        if (electionCurrentSize / electionArraySize > 0.75) {
 
             Election[] temp = electionsArray;
-            electionArraySize=electionArraySize+15;
-           electionsArray  = new Election[electionArraySize];
+            electionArraySize = electionArraySize + 15;
+            electionsArray = new Election[electionArraySize];
             fillElection();
             electionCurrentSize = 0;
 
-            for(int i = 0; i < temp.length; i++){
-                electionsArray[i]= temp[i];
+            for (int i = 0; i < temp.length; i++) {
+                electionsArray[i] = temp[i];
             }
 
         }
 
     }
-
-
-
 
 
     public Election findElectionKey(String key) {
@@ -187,10 +184,97 @@ public class Hash {
         return null;
     }
 
-    public void fillElection(){
+    public void fillElection() {
         Election p = null;
         Arrays.fill(politiciansArray, p);
     }
+
+
+
+    ////////////////////////////////////////////candidate
+
+
+    public void candidateHashFunction(Candidate candidate, Candidate[] candidatesArray) {
+        fillCandidate();
+
+        int cHashIndex = -1;
+
+
+        for (int i = 0; i < candidate.getCandidate().getPoliticianName().length(); i++) {
+            cHashIndex = cHashIndex + candidate.getCandidate().getPoliticianName().charAt(i);
+
+        }
+        cHashIndex = cHashIndex % candidateArraySize;
+
+        System.out.println("Modulus Index= " + cHashIndex + " for value " + candidate);
+
+        while (candidatesArray[cHashIndex] != null) {
+
+            ++cHashIndex;
+
+            System.out.println("Collision Try " + cHashIndex + " Instead");
+
+            // If we get to the end of the array go back to index 0
+
+            cHashIndex %= candidateArraySize;
+
+        }
+        candidatesArray[cHashIndex] = candidate;
+        candidateCurrentSize++;
+        reHashCandidate();
+    }
+
+
+    public void reHashCandidate() {
+        if (candidateCurrentSize / candidateArraySize > 0.75) {
+
+            Candidate[] temp = candidatesArray;
+            candidateArraySize = candidateArraySize + 15;
+            candidatesArray= new Candidate[candidateArraySize];
+            fillCandidate();
+
+            for (int i = 0; i < temp.length; i++) {
+                candidatesArray[i] = temp[i];
+            }
+
+        }
+
+    }
+
+
+    public Candidate findCandidateKey(String key) {
+        int hashIndex = -1;
+        // Find the keys original hash key
+        for (int i = 0; i < key.length(); i++) {
+            hashIndex = hashIndex + key.charAt(i);
+            candidateCurrentSize++;
+        }
+        int arrayIndexHash = hashIndex % 31;
+
+        while (candidatesArray[arrayIndexHash] != null) {
+            if (candidatesArray[arrayIndexHash].getCandidate().getPoliticianName().equals(key)) {
+                // Found the key so return it
+                System.out.println(key + " was found in index " + arrayIndexHash);
+                return candidatesArray[arrayIndexHash];
+            }
+            // Look in the next index
+            ++arrayIndexHash;
+            // If we get to the end of the array go back to index
+            arrayIndexHash %= candidateArraySize;
+        }
+        // Couldn't locate the key
+        return null;
+    }
+
+    public void fillCandidate() {
+       Candidate p = null;
+        Arrays.fill(candidatesArray, p);
+    }
+
+
+
+
+    ///////////////////////////////////////////load & Save
 
 
     public void savePoliticians() throws Exception {
@@ -221,6 +305,21 @@ public class Hash {
         XStream xstream = new XStream(new DomDriver());
         ObjectInputStream is = xstream.createObjectInputStream(new FileReader("Elections.xml"));
         electionsArray = (Election[]) is.readObject();
+        is.close();
+    }
+
+    public void saveCandidates() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("Candidates.xml"));
+        out.writeObject(candidatesArray);
+        out.close();
+    }
+
+
+    public void loadCandidates() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("Candidates.xml"));
+        candidatesArray = (Candidate[]) is.readObject();
         is.close();
     }
 

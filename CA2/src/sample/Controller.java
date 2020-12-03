@@ -161,11 +161,13 @@ Politician politician;
     public void save(ActionEvent actionEvent) throws Exception {
         hash.savePoliticians();
         hash.saveElections();
+        hash.saveCandidates();
     }
 
     public void load(ActionEvent actionEvent) throws Exception {
         hash.loadElections();
         hash.loadPoliticians();
+        hash.loadCandidates();
     }
 
 }

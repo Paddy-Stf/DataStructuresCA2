@@ -4,7 +4,7 @@ package sample;
  * Responsible for object candidate and parameters of the class.
  */
 
-public class Candidate {
+    public class Candidate {
 
     private Politician candidate;
     private int candidateVotes;
