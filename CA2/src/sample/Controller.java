@@ -22,23 +22,19 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    Politician politician;
     Hash hash = new Hash();
-    String[] listOfPoliticians = new String[hash.politicianCurrentSize];
-    String s="";
-    String x="x";
+    String s = "";
+    String x = "x";
 
 
     @FXML
-    public TextField politicianName, politicianImage, politicianDOB, electionDate, electionSeats, candidateVotes, politicianNameSearch;
+    public TextField politicianName, politicianImage, politicianDOB, electionDate, electionSeats, candidateVotes, searchPoliticianName;
     @FXML
     public Button addPoliticianButton, imagePreviewButton, addElectionButton, addCandidateButton, updatePoliticianButton, updateElectionButton, updateCandidateButton, deletePoliticianButton, deleteElectionButton, deleteCandidateButton, searchPoliticianButton, save, load, reset;
     @FXML
-    public ChoiceBox politicianCountyChoice, politicianCurrentPartyChoice, electionType, electionLocation, candidateElectionChoice, searchElectionYear, searchElectionType, searchPoliticianParty, searchPoliticianLocation, searchBy;
+    public ChoiceBox politicianCountyChoice, politicianCurrentPartyChoice, electionType, electionLocation, candidateElectionChoice, searchElectionYear, searchElectionType, searchPoliticianParty, searchPoliticianLocation, sortBy;
     @FXML
     public ListView politicianPreviousPartyList;
-    @FXML
-    public AnchorPane searchElectionButton;
     @FXML
     public ListView viewAll;
     @FXML
@@ -56,16 +52,15 @@ public class Controller implements Initializable {
         searchElectionType.getItems().addAll("General elections", "Seanad elections", "European elections ", "Local elections ", "Presidential elections ", "Referendums");
         searchPoliticianParty.getItems().addAll("Fianna Fail", "Sinn Fein", " Fine Gael", "Green Party", "Labour Party", "Social Democrats", "Solidarity–People Before Profit", "Aontú Right To Change", "Independents", "Human Dignity Alliance", "Workers and Unemployed Action", "Workers Party", "Republican", "Independent Left", "Other");
         searchPoliticianLocation.getItems().addAll("Antrim", "Armagh ", "Cavan", "Derry", "Donegal", "Down", "Fermanagh", "Monaghan", "Tyrone", "Galway", "Leitrim", "Mayo", "Roscommon", "Sligo", "Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow", "Clare", "Cork", "Kerry", "Limerick", "Tipperary", "Waterford");
-        searchBy.getItems().addAll("Politician Name A-Z", "Election Year 2020-1990");
+        sortBy.getItems().addAll("Politician Name A-Z", "Election Year 2020-1990");
         politicianPreviousPartyList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         politicianPreviousPartyList.getItems().addAll("Fianna Fail", "Sinn Fein", " Fine Gael", "Green Party", "Labour Party", "Social Democrats", "Solidarity–People Before Profit", "Aontú Right To Change", "Independents", "Human Dignity Alliance", "Workers and Unemployed Action", "Workers Party", "Republican", "Independent Left", "Other");
         for (int i = 0; i < hash.politiciansArray.length; i++) {
             if (hash.politiciansArray[i] != null) {
-                s =  hash.politiciansArray[i].getPoliticianName() ;
+                s = hash.politiciansArray[i].getPoliticianName();
                 candidateElectionChoice.getItems().addAll(s);
             }
         }
-
 
 
     }
@@ -76,9 +71,9 @@ public class Controller implements Initializable {
 
         for (int i = 0; i < hash.politiciansArray.length; i++) {
             if (hash.politiciansArray[i] != null) {
-                s =  hash.politiciansArray[i].getPoliticianName() ;
+                s = hash.politiciansArray[i].getPoliticianName();
                 if (s != null && !x.equals(s)) {
-                    x=s;
+                    x = s;
                     candidateElectionChoice.getItems().removeAll();
                     candidateElectionChoice.getItems().add(s);
                     System.out.println(s + "== " + x);
@@ -178,10 +173,75 @@ public class Controller implements Initializable {
     }
 
     public void searchPolitician(ActionEvent actionEvent) {
+
+        if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
+            viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
+            for (int i = 0; i < hash.politiciansArray.length; i++) {
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString()) && hash.politiciansArray[i].getPoliticianCounty() == searchPoliticianLocation.getValue().toString()) {
+                    viewAll.getItems().add(hash.politiciansArray[i].toString());
+                }
+            }
+        }
+         else if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null) {
+            viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() );
+            for (int i = 0; i < hash.politiciansArray.length; i++) {
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString())){
+                    viewAll.getItems().add(hash.politiciansArray[i].toString());
+                }
+
+            }
+        }
+         else if (searchPoliticianName.getText() != null && searchPoliticianLocation.getValue() != null) {
+            viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() +  "  located in : " + searchPoliticianLocation.getValue().toString());
+            for (int i = 0; i < hash.politiciansArray.length; i++) {
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())) {
+                    viewAll.getItems().add(hash.politiciansArray[i].toStringWithImage());
+                }
+            }
+        }
+        else if (searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
+            viewAll.getItems().add("Searched For     " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
+            for (int i = 0; i < hash.politiciansArray.length; i++) {
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianCurrentParty() == searchPoliticianParty.getValue().toString() && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())){
+                    Image image = new Image(hash.politiciansArray[i].getPoliticianImage());
+                    javafx.scene.image.ImageView imageView=new ImageView(image);
+                    viewAll.getItems().add( hash.politiciansArray[i].toString()  );
+
+                }
+            }
+        }
+
     }
 
     public void searchElection(ActionEvent actionEvent) {
+
+        viewAll.getItems().add("Searched For" + searchElectionType.getValue().toString() + " in " + searchElectionYear.getValue().toString());
+        if (searchElectionType.getValue() != null && searchElectionYear.getValue() != null)
+            for (int i = 0; i < hash.electionsArray.length; i++) {
+                if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString()) && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
+                    viewAll.getItems().add(hash.electionsArray[i].toString());
+                }
+            }
+        if (searchElectionYear.getValue() == null) {
+            for (int i = 0; i < hash.electionsArray.length; i++) {
+                if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString())) {
+                    viewAll.getItems().add(hash.electionsArray[i].toString());
+                }
+            }
+        }
+        if (searchElectionType.getValue() == null) {
+            for (int i = 0; i < hash.electionsArray.length; i++) {
+                if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
+                    viewAll.getItems().add(hash.electionsArray[i].toString());
+                }
+            }
+        }
     }
+
+
+
+
+
 
 
     /**

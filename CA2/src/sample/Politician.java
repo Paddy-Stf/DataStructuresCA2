@@ -1,5 +1,12 @@
 package sample;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import javax.swing.*;
+import javax.swing.text.Element;
+import java.awt.*;
+
 public class Politician {
 
     private String politicianName, politicianDOB, politicianCounty , politicianCurrentParty, politicianPreviousParty, politicianImage;
@@ -68,13 +75,25 @@ public class Politician {
 
     @Override
     public String toString() {
-        return "Politician{" +
+        return
                 "politicianName='" + politicianName + '\'' +
                 ", politicianDOB='" + politicianDOB + '\'' +
                 ", politicianCounty='" + politicianCounty + '\'' +
                 ", politicianCurrentParty='" + politicianCurrentParty + '\'' +
                 ", politicianPreviousParty='" + politicianPreviousParty + '\'' +
-                ", politicianImage='" + politicianImage + '\'' +
-                '}';
+                ", politicianImage='" + politicianImage + '\'' ;
+    }
+
+    public String toStringWithImage() {
+
+
+
+        return
+
+                "politicianName='" + politicianName + '\'' +
+                ", politicianDOB='" + politicianDOB + '\'' +
+                ", politicianCounty='" + politicianCounty + '\'' +
+                ", politicianCurrentParty='" + politicianCurrentParty + '\'' +
+                ", politicianPreviousParty='" + politicianPreviousParty + '\'' ;
     }
 }
