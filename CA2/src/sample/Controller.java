@@ -25,9 +25,8 @@ public class Controller implements Initializable {
     Hash hash = new Hash();
     String s = "";
     String x = "x";
-    searchElectionLinkedList SELL;
-    searchPoliticianLinkedList SPLL;
-
+   politicianNode pn;
+   electionNode en;
 
     @FXML
     public TextField politicianName, politicianImage, politicianDOB, electionDate, electionSeats, candidateVotes, searchPoliticianName;
@@ -175,13 +174,13 @@ public class Controller implements Initializable {
     }
 
     public void searchPolitician(ActionEvent actionEvent) {
-        politicianNode politicianTemp = SPLL.politicianHead;
+        politicianNode politicianTemp =pn.PLL.politicianHead;
 
         if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString()) && hash.politiciansArray[i].getPoliticianCounty() == searchPoliticianLocation.getValue().toString()) {
-                    SPLL.addPolitician(hash.politiciansArray[i]);
+                    pn.PLL.addPolitician(hash.politiciansArray[i]);
                 }
             }
         }
@@ -189,7 +188,8 @@ public class Controller implements Initializable {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() );
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString())){
-                    SPLL.addPolitician(hash.politiciansArray[i]);
+                    pn.PLL.addPolitician(hash.politiciansArray[i]);
+
 
                 }
 
@@ -199,15 +199,17 @@ public class Controller implements Initializable {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() +  "  located in : " + searchPoliticianLocation.getValue().toString());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().contains(searchPoliticianName.getText()) && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())) {
-                    SPLL.addPolitician(hash.politiciansArray[i]);
+                    pn.PLL.addPolitician(hash.politiciansArray[i]);
                 }
-            }
+
+                }
         }
         else if (searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianCurrentParty() == searchPoliticianParty.getValue().toString() && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())){
-                    SPLL.addPolitician(hash.politiciansArray[i]);
+                    pn.PLL.addPolitician(hash.politiciansArray[i]);
+
 
                 }
             }
@@ -216,7 +218,7 @@ public class Controller implements Initializable {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName()==searchPoliticianName.getText()){
-                    SPLL.addPolitician(hash.politiciansArray[i]);
+                    pn.PLL.addPolitician(hash.politiciansArray[i]);
 
                 }
             }
@@ -230,27 +232,28 @@ public class Controller implements Initializable {
     }
 
     public void searchElection(ActionEvent actionEvent) {
-       electionNode electionTemp = SELL.electionHead;
+       electionNode electionTemp = en.ELL.electionHead;
 
 
         viewAll.getItems().add("Searched For" + searchElectionType.getValue().toString() + " in " + searchElectionYear.getValue().toString());
         if (searchElectionType.getValue() != null && searchElectionYear.getValue() != null)
             for (int i = 0; i < hash.electionsArray.length; i++) {
                 if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString()) && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
-                   SELL.addElection(hash.electionsArray[i]);
+                  en.ELL.addElection(hash.electionsArray[i]);
                 }
             }
         if (searchElectionYear.getValue() == null) {
             for (int i = 0; i < hash.electionsArray.length; i++) {
                 if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString())) {
-                    SELL.addElection(hash.electionsArray[i]);
+                    en.ELL.addElection(hash.electionsArray[i]);
                 }
             }
         }
         if (searchElectionType.getValue() == null) {
             for (int i = 0; i < hash.electionsArray.length; i++) {
                 if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
-                    SELL.addElection(hash.electionsArray[i]);
+                    en.ELL.addElection(hash.electionsArray[i]);
+
                 }
             }
         }
