@@ -86,8 +86,6 @@ public class Politician {
 
     public String toStringWithImage() {
 
-
-
         return
 
                 "politicianName='" + politicianName + '\'' +

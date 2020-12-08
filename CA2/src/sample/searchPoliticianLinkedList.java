@@ -1,8 +1,12 @@
 package sample;
 
 public class searchPoliticianLinkedList {
-    politicianNode politicianHead;
 
+    public searchPoliticianLinkedList() {
+        this.politicianHead = null;
+    }
+
+    public politicianNode politicianHead;
 
     public void addPolitician(Politician e) {
         politicianNode np = new politicianNode();
@@ -11,14 +15,4 @@ public class searchPoliticianLinkedList {
         politicianHead = np;
     }
 
-    public String printPoliticianList() {
-        politicianNode temp = politicianHead;
-        String politicianList = "LinkedList + \n ";
-
-        while (temp != null) {
-            politicianList += temp.getContents().getPoliticianName();
-            temp = temp.next;
-        }
-        return politicianList;
-    }
 }

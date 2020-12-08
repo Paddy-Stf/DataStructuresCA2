@@ -121,7 +121,7 @@ public class Controller implements Initializable {
 
     public void updateElection(ActionEvent actionEvent) {
         Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionType());
-        if (readInElection().getElectionLocation() == electionToBeUpdated.getElectionLocation()) {
+        if (readInElection().getElectionLocation().equals(electionToBeUpdated.getElectionLocation())) {
             electionToBeUpdated.setElectionDate(electionDate.getText());
             electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
             electionToBeUpdated.setElectionType(electionType.getValue().toString());
@@ -174,7 +174,16 @@ public class Controller implements Initializable {
     }
 
     public void searchPolitician(ActionEvent actionEvent) {
-        politicianNode politicianTemp =pn.PLL.politicianHead;
+
+        politicianNode politicianTemp;
+
+        while(pn.PLL.politicianHead!=null) {
+             politicianTemp = pn.PLL.politicianHead;
+            while (politicianTemp.next != null) {
+                viewAll.getItems().add(politicianTemp.toString());
+                politicianTemp = politicianTemp.next;
+            }
+        }
 
         if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
@@ -207,7 +216,7 @@ public class Controller implements Initializable {
         else if (searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
-                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianCurrentParty() == searchPoliticianParty.getValue().toString() && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())){
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString()) && hash.politiciansArray[i].getPoliticianCounty().equals(searchPoliticianLocation.getValue().toString())){
                     pn.PLL.addPolitician(hash.politiciansArray[i]);
 
 
@@ -217,17 +226,12 @@ public class Controller implements Initializable {
         else if (searchPoliticianName.getText()!=null){
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
-                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName()==searchPoliticianName.getText()){
+                if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianName().equals(searchPoliticianName.getText())){
                     pn.PLL.addPolitician(hash.politiciansArray[i]);
 
                 }
             }
         }
-        while (politicianTemp != null & politicianTemp.next!=null) {
-            viewAll.getItems().add(politicianTemp.toString());
-            politicianTemp = politicianTemp.next;
-        }
-
 
     }
 
@@ -262,14 +266,7 @@ public class Controller implements Initializable {
             electionTemp = electionTemp.next;
         }
 
-
     }
-
-
-
-
-
-
 
 
     public void reset(ActionEvent actionEvent) throws Exception {
