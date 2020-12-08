@@ -1,12 +1,8 @@
 package sample;
 
 public class searchPoliticianLinkedList {
+    politicianNode politicianHead;
 
-    public searchPoliticianLinkedList() {
-        this.politicianHead = null;
-    }
-
-    public politicianNode politicianHead;
 
     public void addPolitician(Politician e) {
         politicianNode np = new politicianNode();

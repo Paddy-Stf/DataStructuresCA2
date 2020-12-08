@@ -5,7 +5,7 @@ public class electionNode {
     private Election contents;
 
     /**Creates a list of  shelves  and connects it to a aisle */
-    searchElectionLinkedList ELL = new searchElectionLinkedList();
+
 
     public Election getContents(){
         return  contents;
@@ -14,7 +14,5 @@ public class electionNode {
         contents=c;
     }
 
-    public searchElectionLinkedList getELL() {
-        return ELL;
-    }
+
 }

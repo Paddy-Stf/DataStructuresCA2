@@ -2,8 +2,8 @@ package sample;
 
 public class politicianNode {
 
-    searchPoliticianLinkedList PLL = new searchPoliticianLinkedList();
-    public politicianNode next;
+
+    public politicianNode next=null;
     private Politician contents;
 
     public Politician getContents(){
@@ -12,5 +12,6 @@ public class politicianNode {
     public void setContents( Politician c){
         contents=c;
     }
+
 
 }
