@@ -76,12 +76,11 @@ public class Politician {
     @Override
     public String toString() {
         return
-                "politicianName='" + politicianName + '\'' +
-                ", politicianDOB='" + politicianDOB + '\'' +
-                ", politicianCounty='" + politicianCounty + '\'' +
-                ", politicianCurrentParty='" + politicianCurrentParty + '\'' +
-                ", politicianPreviousParty='" + politicianPreviousParty + '\'' +
-                ", politicianImage='" + politicianImage + '\'' ;
+                "politicianName : " + politicianName +
+                ", politicianDOB : " + politicianDOB +
+                ", politicianCounty : " + politicianCounty +
+                ", politicianCurrentParty : " + politicianCurrentParty +
+                ", politicianPreviousParty : " + politicianPreviousParty ;
     }
 
     public String toStringWithImage() {

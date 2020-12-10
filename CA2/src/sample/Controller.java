@@ -25,6 +25,8 @@ public class Controller implements Initializable {
     Hash hash = new Hash();
     String s = "";
     String x = "x";
+    String d = "";
+    String c = "c";
     searchPoliticianLinkedList PLL = new searchPoliticianLinkedList();
     searchElectionLinkedList ELL = new searchElectionLinkedList();
 
@@ -33,7 +35,7 @@ public class Controller implements Initializable {
     @FXML
     public Button addPoliticianButton, imagePreviewButton, addElectionButton, addCandidateButton, updatePoliticianButton, updateElectionButton, updateCandidateButton, deletePoliticianButton, deleteElectionButton, deleteCandidateButton, searchPoliticianButton, save, load, reset;
     @FXML
-    public ChoiceBox politicianCountyChoice, politicianCurrentPartyChoice, electionType, electionLocation, candidateElectionChoice, searchElectionYear, searchElectionType, searchPoliticianParty, searchPoliticianLocation, sortBy;
+    public ChoiceBox candidatesElection, politicianCountyChoice, politicianCurrentPartyChoice, electionType, electionLocation, candidateElectionChoice, searchElectionYear, searchElectionType, searchPoliticianParty, searchPoliticianLocation, sortBy;
     @FXML
     public ListView politicianPreviousPartyList;
     @FXML
@@ -62,8 +64,12 @@ public class Controller implements Initializable {
                 candidateElectionChoice.getItems().addAll(s);
             }
         }
-
-
+        for (int i = 0; i < hash.candidatesArray.length; i++) {
+            if (hash.candidatesArray[i] != null) {
+                d = hash.candidatesArray[i].getElection().getElectionType() + hash.candidatesArray[i].getElection().getElectionDate();
+                candidatesElection.getItems().addAll(d);
+            }
+        }
     }
 
 
@@ -109,10 +115,25 @@ public class Controller implements Initializable {
 
     public void addElection(ActionEvent actionEvent) {
         hash.electionHashFunction(readInElection(), hash.electionsArray);
+
+        for (int i = 0; i < hash.electionsArray.length; i++) {
+            if (hash.electionsArray[i] != null) {
+                d = hash.electionsArray[i].getElectionType() + hash.electionsArray[i].getElectionDate();
+                if (d != null && !x.equals(d)) {
+                    c = d;
+                    candidatesElection.getItems().removeAll();
+                    candidatesElection.getItems().add(d);
+                    System.out.println(d + "== " + c);
+
+
+                }
+            }
+        }
+
     }
 
     public void deleteElection(ActionEvent actionEvent) {
-        Election electionToBeDeleted = hash.findElectionKey(readInElection().getElectionType());
+        Election electionToBeDeleted = hash.findElectionKey(readInElection().getElectionType(), readInElection().getElectionDate());
         electionToBeDeleted.setElectionDate(null);
         electionToBeDeleted.setElectionLocation(null);
         electionToBeDeleted.setElectionType(null);
@@ -120,7 +141,7 @@ public class Controller implements Initializable {
     }
 
     public void updateElection(ActionEvent actionEvent) {
-        Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionType());
+        Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionType(), readInElection().getElectionDate());
         if (readInElection().getElectionLocation().equals(electionToBeUpdated.getElectionLocation())) {
             electionToBeUpdated.setElectionDate(electionDate.getText());
             electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
@@ -139,14 +160,17 @@ public class Controller implements Initializable {
         Candidate candidateToBeDeleted = hash.findCandidateKey(readInCandidate().getCandidate().getPoliticianName());
         candidateToBeDeleted.setCandidate(null);
         candidateToBeDeleted.setCandidateVotes(-1);
+        candidateToBeDeleted.setElection(null);
     }
 
 
     public void updateCandidate(ActionEvent actionEvent) {
         Candidate candidateToBeUpdated = hash.findCandidateKey(readInCandidate().getCandidate().getPoliticianName());
         Politician newPolitician = hash.findPoliticianKey(candidateElectionChoice.getValue().toString());
+        Election newElection = hash.findElectionKey(candidatesElection.getValue().toString(), "");
         candidateToBeUpdated.setCandidate(newPolitician);
         candidateToBeUpdated.setCandidateVotes(Integer.parseInt(candidateVotes.getText()));
+        candidateToBeUpdated.setElection(newElection);
     }
 
     public Politician readInPolitician() {
@@ -159,7 +183,8 @@ public class Controller implements Initializable {
 
     public Candidate readInCandidate() {
         Politician chosenPolitician = hash.findPoliticianKey(candidateElectionChoice.getValue().toString());
-        return new Candidate(chosenPolitician, Integer.parseInt(candidateVotes.getText()));
+        Election chosenElection = hash.findElectionKey(candidatesElection.getValue().toString(), "");
+        return new Candidate(chosenPolitician, chosenElection, Integer.parseInt(candidateVotes.getText()));
     }
 
 
@@ -172,11 +197,76 @@ public class Controller implements Initializable {
 
     public void searchBy(ActionEvent actionEvent) {
 
-
     }
 
-    public void searchPolitician(ActionEvent actionEvent) {
 
+    public void drillDownElection() {
+        electionNode electionTemp = ELL.electionHead;
+
+        TreeItem electionItems = new TreeItem("Elections");
+
+        if (electionTemp != null) {
+            TreeItem electionView = new TreeItem(electionTemp.getContents().toString());
+            electionItems.getChildren().add(electionView);
+
+            for (int i = 0; i < hash.candidatesArray.length; i++) {
+                Candidate cc = hash.candidatesArray[i];
+                if (cc != null) {
+                    if (cc.getElection().toString().equals(electionTemp.getContents().toString())) {
+                        TreeItem candidateView = new TreeItem("Candidate Name : " + cc.getCandidate().getPoliticianName() + " , " + " Number of Votes :  " + cc.getCandidateVotes());
+                        electionView.getChildren().add(candidateView);
+
+                        TreeItem politicianView = new TreeItem(cc.getCandidate().toString());
+                        candidateView.getChildren().add(politicianView);
+                    }
+                }
+            }
+            electionTemp = electionTemp.next;
+        }
+        drillDownTreeView.setRoot(electionItems);
+    }
+
+    public void drillDownPolitician() {
+        politicianNode politicianTemp = PLL.politicianHead;
+
+        TreeItem Politicians = new TreeItem("Politicians");
+
+        if (politicianTemp != null) {
+            TreeItem politicianNameView = new TreeItem(politicianTemp.getContents().getPoliticianName());
+            Politicians.getChildren().add(politicianNameView);
+
+            TreeItem politicianDetailsView = new TreeItem(politicianTemp.getContents().toString());
+            politicianNameView.getChildren().add(politicianDetailsView);
+
+            for (int i = 0; i < hash.candidatesArray.length; i++) {
+                Candidate cc = hash.candidatesArray[i];
+                if (cc.getCandidate().getPoliticianName().equals(politicianTemp.getContents().getPoliticianName())) {
+
+                    TreeItem candidateView = new TreeItem("Candidate Name : " + cc.getCandidate().getPoliticianName() + " , " + " Number of Votes :  " + cc.getCandidateVotes());
+                    politicianDetailsView.getChildren().add(candidateView);
+
+                    TreeItem electionView = new TreeItem(" Election Type : " + cc.getElection().getElectionType() + " Election Location : " + cc.getElection().getElectionLocation() + " Election Date : " + cc.getElection().getElectionDate() + " Election Seats : " + cc.getElection().getNumSeats());
+                    candidateView.getChildren().add(electionView);
+
+                    for (int j = 0; i < hash.candidatesArray.length; i++) {
+                        Candidate cj = hash.candidatesArray[i];
+                        if (cj.getElection() == cc.getElection()) {
+                            TreeItem candidatesInElectionAbove = new TreeItem(cj.getCandidate().getPoliticianName() + cj.getCandidateVotes());
+                            candidateView.getChildren().add(candidatesInElectionAbove);
+
+                            TreeItem candidatesInElectionAboveFull = new TreeItem(cj.getCandidate().toString());
+                            candidatesInElectionAbove.getChildren().add(candidatesInElectionAboveFull);
+                        }
+                    }
+                }
+            }
+            politicianTemp = politicianTemp.next;
+        }
+        drillDownTreeView.setRoot(Politicians);
+    }
+
+
+    public void searchPolitician(ActionEvent actionEvent) {
 
         if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
@@ -229,7 +319,7 @@ public class Controller implements Initializable {
                 politicianTemp = politicianTemp.next;
             }
         }
-
+        drillDownPolitician();
 
     }
 
@@ -263,14 +353,13 @@ public class Controller implements Initializable {
         }
 
         electionNode electionTemp = ELL.electionHead;
-        if(electionTemp != null) {
+        if (electionTemp != null) {
             viewAll.getItems().add(electionTemp.getContents().toString());
-            if (electionTemp.next != null){
+            if (electionTemp.next != null) {
                 electionTemp = electionTemp.next;
             }
         }
-
-
+        drillDownElection();
     }
 
 

@@ -115,9 +115,9 @@ public class Hash {
 
         int eHashIndex = -1;
 
-
-        for (int i = 0; i < election.getElectionType().length(); i++) {
-            eHashIndex = eHashIndex + election.getElectionType().charAt(i);
+        for (int i = 0; i < election.getElectionDate().length() + election.getElectionType().length(); i++) {
+            String s= election.getElectionDate().concat(election.getElectionType());
+            eHashIndex = eHashIndex + s.charAt(i);
 
         }
         eHashIndex = eHashIndex % electionArraySize;
@@ -160,17 +160,18 @@ public class Hash {
     }
 
 
-    public Election findElectionKey(String key) {
+    public Election findElectionKey(String key ,String key2) {
         int hashIndex = -1;
         // Find the keys original hash key
-        for (int i = 0; i < key.length(); i++) {
-            hashIndex = hashIndex + key.charAt(i);
+        for (int i = 0; i < key.length() + key2.length(); i++) {
+            String s=key.concat(key2);
+            hashIndex = hashIndex + s.charAt(i);
             electionCurrentSize++;
         }
         int arrayIndexHash = hashIndex % 31;
 
         while (electionsArray[arrayIndexHash] != null) {
-            if (electionsArray[arrayIndexHash].getElectionType().equals(key)) {
+            if (key.contains(electionsArray[arrayIndexHash].getElectionType()) && key.contains(electionsArray[arrayIndexHash].getElectionDate())) {
                 // Found the key so return it
                 System.out.println(key + " was found in index " + arrayIndexHash);
                 return electionsArray[arrayIndexHash];
@@ -186,7 +187,7 @@ public class Hash {
 
     public void fillElection() {
         Election p = null;
-        Arrays.fill(politiciansArray, p);
+        Arrays.fill(electionsArray, p);
     }
 
 
