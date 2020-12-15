@@ -30,7 +30,6 @@ public class Hash {
 
 
     public void politicianHashFunction(Politician politician, Politician[] politiciansArray) {
-        fillPolitician();
 
         int pHashIndex = -1;
 
@@ -67,7 +66,6 @@ public class Hash {
             Politician[] temp = politiciansArray;
             politicianArraySize = politicianArraySize + 15;
             politiciansArray = new Politician[politicianArraySize];
-            fillPolitician();
             politicianCurrentSize = 0;
 
             for (int i = 0; i < temp.length; i++) {
