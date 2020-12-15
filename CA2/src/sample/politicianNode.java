@@ -12,6 +12,4 @@ public class politicianNode {
     public void setContents( Politician c){
         contents=c;
     }
-
-
 }

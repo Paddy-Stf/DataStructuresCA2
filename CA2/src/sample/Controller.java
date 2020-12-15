@@ -85,7 +85,6 @@ public class Controller implements Initializable {
                     candidateElectionChoice.getItems().add(s);
                     System.out.println(s + "== " + x);
 
-
                 }
             }
         }
@@ -195,7 +194,11 @@ public class Controller implements Initializable {
     }
 
 
-    public void searchBy(ActionEvent actionEvent) {
+    public void sortBy(ActionEvent actionEvent) {
+
+        if(sortBy.getValue().toString().equals("Politician Name A-Z")){
+            sortPoliticianByName();
+        }
 
     }
 
@@ -243,7 +246,7 @@ public class Controller implements Initializable {
                 if (cc != null) {
                     if (cc.getCandidate().getPoliticianName().equals(politicianTemp.getContents().getPoliticianName())) {
 
-                        TreeItem candidateView = new TreeItem( " Number of Votes :  " + cc.getCandidateVotes() + "," + "Election Type : " + cc.getElection().getElectionType());
+                        TreeItem candidateView = new TreeItem(" Number of Votes :  " + cc.getCandidateVotes() + "," + "Election Type : " + cc.getElection().getElectionType());
                         politicianDetailsView.getChildren().add(candidateView);
 
                         TreeItem electionView = new TreeItem(" Election Type : " + cc.getElection().getElectionType() + " Election Location : " + cc.getElection().getElectionLocation() + " Election Date : " + cc.getElection().getElectionDate() + " Election Seats : " + cc.getElection().getNumSeats());
@@ -253,7 +256,7 @@ public class Controller implements Initializable {
                             Candidate cj = hash.candidatesArray[i];
                             if (cj != null) {
                                 if (cj.getElection() == cc.getElection()) {
-                                    TreeItem candidatesInElectionAbove = new TreeItem( "Candidate Name : " + cj.getCandidate().getPoliticianName() + "Candidate Votes : " + cj.getCandidateVotes());
+                                    TreeItem candidatesInElectionAbove = new TreeItem("Candidate Name : " + cj.getCandidate().getPoliticianName() + "Candidate Votes : " + cj.getCandidateVotes());
                                     electionView.getChildren().add(candidatesInElectionAbove);
 
                                     TreeItem candidatesInElectionAboveFull = new TreeItem(cj.getCandidate().toString());
@@ -364,6 +367,39 @@ public class Controller implements Initializable {
             }
         }
         drillDownElection();
+
+
+    }
+
+
+    public void sortPoliticianByName() {
+        politicianNode temp = PLL.politicianHead;
+
+        // Traverse the List
+        while (temp != null && temp.next != null) {
+            politicianNode min = temp;
+            politicianNode nextComparison = temp.next;
+
+            // Traverse the unsorted sublist
+            while (nextComparison != null) {
+
+                if (min.getContents().getPoliticianName().compareTo(nextComparison.getContents().getPoliticianName()) > 0) {
+
+                    politicianNode l = temp;
+                    politicianNode k = temp.next;
+                    temp = k;
+                    temp.next = l;
+
+
+                    min = nextComparison;
+                    nextComparison = nextComparison.next;
+                }
+                else {
+                    min = nextComparison;
+                    nextComparison = nextComparison.next;
+                }
+            }
+        }
     }
 
 
@@ -391,7 +427,6 @@ public class Controller implements Initializable {
         alert.setTitle("Error");
         alert.setHeaderText("Input Error");
         alert.setContentText(r);
-
 
         alert.showAndWait();
     }

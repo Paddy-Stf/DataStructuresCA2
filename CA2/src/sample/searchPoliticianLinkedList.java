@@ -11,4 +11,5 @@ public class searchPoliticianLinkedList {
         politicianHead = np;
     }
 
+
 }
