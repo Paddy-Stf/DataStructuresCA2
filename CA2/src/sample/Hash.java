@@ -109,7 +109,7 @@ public class Hash {
 /////////////////// ELECTION HASH FUNCTION ETC.
 
     public void electionHashFunction(Election election, Election[] electionsArray) {
-        fillElection();
+
 
         int eHashIndex = -1;
 
@@ -146,7 +146,6 @@ public class Hash {
             Election[] temp = electionsArray;
             electionArraySize = electionArraySize + 15;
             electionsArray = new Election[electionArraySize];
-            fillElection();
             electionCurrentSize = 0;
 
             for (int i = 0; i < temp.length; i++) {
@@ -194,7 +193,6 @@ public class Hash {
 
 
     public void candidateHashFunction(Candidate candidate, Candidate[] candidatesArray) {
-        fillCandidate();
 
         int cHashIndex = -1;
 
@@ -230,7 +228,6 @@ public class Hash {
             Candidate[] temp = candidatesArray;
             candidateArraySize = candidateArraySize + 15;
             candidatesArray= new Candidate[candidateArraySize];
-            fillCandidate();
 
             for (int i = 0; i < temp.length; i++) {
                 candidatesArray[i] = temp[i];

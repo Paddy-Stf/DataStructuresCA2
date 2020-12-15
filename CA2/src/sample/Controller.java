@@ -166,12 +166,14 @@ public class Controller implements Initializable {
 
     public void sortBy(ActionEvent actionEvent) {
 
+
         if (sortBy.getValue().toString().equals("Politician Name A-Z")) {
 
             sortPoliticianByName();
 
-
         }
+
+
 
     }
 
@@ -187,7 +189,7 @@ public class Controller implements Initializable {
 
             for (int i = 0; i < hash.candidatesArray.length; i++) {
                 Candidate cc = hash.candidatesArray[i];
-                while (cc != null) {
+                if (cc != null) {
                     if (cc.getElection().toString().equals(electionTemp.getContents().toString())) {
                         TreeItem candidateView = new TreeItem("Candidate Name : " + cc.getCandidate().getPoliticianName() + " , " + " Number of Votes :  " + cc.getCandidateVotes());
                         electionView.getChildren().add(candidateView);
@@ -239,7 +241,6 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-
             }
             politicianTemp = politicianTemp.next;
         }
@@ -317,6 +318,7 @@ public class Controller implements Initializable {
 
 
     public void searchElection(ActionEvent actionEvent) {
+        ELL=new searchElectionLinkedList();
 
 
         if (searchElectionType.getValue() != null && searchElectionYear.getValue() != null) {
@@ -327,7 +329,7 @@ public class Controller implements Initializable {
                 }
             }
         }
-        if (searchElectionYear.getValue() == null && searchElectionType.getValue().toString() != null) {
+        if ( searchElectionType.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchElectionType.getValue().toString());
             for (int i = 0; i < hash.electionsArray.length; i++) {
                 if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString())) {
@@ -335,7 +337,7 @@ public class Controller implements Initializable {
                 }
             }
         }
-        if (searchElectionType.getValue() == null && searchElectionYear != null) {
+        if ( searchElectionYear.getValue() != null) {
             viewAll.getItems().add("Searched For  Elections in   " + searchElectionYear.getValue().toString());
             for (int i = 0; i < hash.electionsArray.length; i++) {
                 if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
@@ -352,7 +354,7 @@ public class Controller implements Initializable {
                 electionTemp = electionTemp.next;
             } else break;
         }
-        drillDownElection();
+    drillDownElection();
 
 
     }
