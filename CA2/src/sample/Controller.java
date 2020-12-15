@@ -65,18 +65,9 @@ public class Controller implements Initializable {
     public void addPolitician(ActionEvent actionEvent) {
         hash.politicianHashFunction(readInPolitician(), hash.politiciansArray);
 
-        for (int i = 0; i < hash.politiciansArray.length; i++) {
-            if (hash.politiciansArray[i] != null) {
-                s = hash.politiciansArray[i].getPoliticianName();
-                while (s != null && !s.equals(x)) {
-                    x = s;
-                    candidateElectionChoice.getItems().removeAll();
-                    candidateElectionChoice.getItems().add(s);
-                    System.out.println(s + "== " + x);
+        String Y = readInPolitician().getPoliticianName();
+        candidateElectionChoice.getItems().add(Y);
 
-                }
-            }
-        }
     }
 
     public void deletePolitician(ActionEvent actionEvent) {
@@ -104,19 +95,9 @@ public class Controller implements Initializable {
     public void addElection(ActionEvent actionEvent) {
         hash.electionHashFunction(readInElection(), hash.electionsArray);
 
-        for (int i = 0; i < hash.electionsArray.length; i++) {
-            if (hash.electionsArray[i] != null) {
-                d = hash.electionsArray[i].getElectionType() + hash.electionsArray[i].getElectionDate();
-                if (d != null && !x.equals(d)) {
-                    c = d;
-                    candidatesElection.getItems().removeAll();
-                    candidatesElection.getItems().add(d);
-                    System.out.println(d + "== " + c);
+        String Y = readInElection().getElectionType() + readInElection().getElectionDate();
+        candidatesElection.getItems().add(Y);
 
-
-                }
-            }
-        }
 
     }
 
@@ -185,8 +166,11 @@ public class Controller implements Initializable {
 
     public void sortBy(ActionEvent actionEvent) {
 
-        if(sortBy.getValue().toString().equals("Politician Name A-Z")){
+        if (sortBy.getValue().toString().equals("Politician Name A-Z")) {
+
             sortPoliticianByName();
+
+
         }
 
     }
@@ -241,8 +225,8 @@ public class Controller implements Initializable {
                         TreeItem electionView = new TreeItem(" Election Type : " + cc.getElection().getElectionType() + " Election Location : " + cc.getElection().getElectionLocation() + " Election Date : " + cc.getElection().getElectionDate() + " Election Seats : " + cc.getElection().getNumSeats());
                         candidateView.getChildren().add(electionView);
 
-                        for (int j = 0; i < hash.candidatesArray.length; i++) {
-                            Candidate cj = hash.candidatesArray[i];
+                        for (int j = 0; j < hash.candidatesArray.length; j++) {
+                            Candidate cj = hash.candidatesArray[j];
                             if (cj != null) {
                                 if (cj.getElection() == cc.getElection()) {
                                     TreeItem candidatesInElectionAbove = new TreeItem("Candidate Name : " + cj.getCandidate().getPoliticianName() + "Candidate Votes : " + cj.getCandidateVotes());
@@ -255,15 +239,17 @@ public class Controller implements Initializable {
                         }
                     }
                 }
+
             }
             politicianTemp = politicianTemp.next;
         }
+
         drillDownTreeView.setRoot(Politicians);
     }
 
 
     public void searchPolitician(ActionEvent actionEvent) {
-        PLL= new searchPoliticianLinkedList();
+        PLL = new searchPoliticianLinkedList();
 
         if (searchPoliticianName.getText() != null && searchPoliticianParty.getValue() != null && searchPoliticianLocation.getValue() != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianName.getText() + " from " + searchPoliticianParty.getValue().toString() + "  located in : " + searchPoliticianLocation.getValue().toString());
@@ -307,8 +293,7 @@ public class Controller implements Initializable {
 
                 }
             }
-        }
-        else if (searchPoliticianParty != null) {
+        } else if (searchPoliticianParty != null) {
             viewAll.getItems().add("Searched For     " + searchPoliticianParty.getValue().toString());
             for (int i = 0; i < hash.politiciansArray.length; i++) {
                 if (hash.politiciansArray[i] != null && hash.politiciansArray[i].getPoliticianCurrentParty().equals(searchPoliticianParty.getValue().toString())) {
@@ -323,14 +308,12 @@ public class Controller implements Initializable {
             viewAll.getItems().add(politicianTemp.getContents().toString());
             if (politicianTemp.next != null) {
                 politicianTemp = politicianTemp.next;
-            }
-            else break;
+            } else break;
         }
 
         drillDownPolitician();
 
     }
-
 
 
     public void searchElection(ActionEvent actionEvent) {
@@ -367,8 +350,7 @@ public class Controller implements Initializable {
             viewAll.getItems().add(electionTemp.getContents().toString());
             if (electionTemp.next != null) {
                 electionTemp = electionTemp.next;
-            }
-            else break;
+            } else break;
         }
         drillDownElection();
 
@@ -379,31 +361,34 @@ public class Controller implements Initializable {
     public void sortPoliticianByName() {
         politicianNode temp = PLL.politicianHead;
 
+
         // Traverse the List
-        while (temp != null && temp.next != null) {
+        if (temp != null && temp.next != null) {
             politicianNode min = temp;
             politicianNode nextComparison = temp.next;
 
             // Traverse the unsorted sublist
-            while (nextComparison != null) {
+            if (min.getContents().getPoliticianName().compareTo(nextComparison.getContents().getPoliticianName()) > 0) {
 
-                if (min.getContents().getPoliticianName().compareTo(nextComparison.getContents().getPoliticianName()) > 0) {
+                politicianNode l = temp;
+                politicianNode k = temp.next;
+                temp = k;
+                temp.next = l;
 
-                    politicianNode l = temp;
-                    politicianNode k = temp.next;
-                    temp = k;
-                    temp.next = l;
+                min = nextComparison;
+                nextComparison = nextComparison.next;
 
-
-                    min = nextComparison;
-                    nextComparison = nextComparison.next;
-                }
-                else {
-                    min = nextComparison;
-                    nextComparison = nextComparison.next;
-                }
             }
+            if (min.getContents().getPoliticianName().compareTo(nextComparison.getContents().getPoliticianName()) < 1) {
+                min = nextComparison;
+                nextComparison = nextComparison.next;
+
+            }
+
+            temp=temp.next;
         }
+
+
     }
 
 
