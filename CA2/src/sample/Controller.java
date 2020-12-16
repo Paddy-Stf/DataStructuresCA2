@@ -160,10 +160,18 @@ public class Controller implements Initializable {
 
     public void sortBy(ActionEvent actionEvent) {
         if (sortBy.getValue().toString().equals("Politician Name A-Z")) {
-            sortPoliticianByName(searchPoliticianArray);
+            sortPoliticianByName(searchPoliticianArray, hash.politicianArraySize);
 
+            viewAll.getItems().add("Sorted by Politician Name");
+            for (int i = 0; i < searchPoliticianArray.length; i++) {
+                if (searchPoliticianArray[i] != null) {
+                    viewAll.getItems().add(searchPoliticianArray[i].toString());
+                }
+            }
+            drillDownPolitician();
         }
     }
+
 
 
     public void drillDownElection() {
@@ -345,24 +353,61 @@ public class Controller implements Initializable {
         }
 
 
-    public void sortPoliticianByName(Politician[] arrayToBeSorted)
+//    public void sortPoliticianByName(Politician[] arrayToBeSorted)
+//    {
+//        int n = arrayToBeSorted.length;
+//
+//        // One by one move boundary of unsorted array
+//        for (int i = 0; i < n - 1; i++)
+//        {
+//            // Find the minimum element in unsorted array
+//            int minimum = i;
+//            for (int j = i + 1; j < n; j++)
+//                if (arrayToBeSorted[j].getPoliticianName().compareTo(arrayToBeSorted[minimum].getPoliticianName()) > 0)
+//                    minimum = j;
+//
+//            // Swap the found minimum element with the first
+//            // element
+//            Politician temp = arrayToBeSorted[minimum];
+//            arrayToBeSorted[minimum] = arrayToBeSorted[i];
+//            arrayToBeSorted[i] = temp;
+//        }
+//    }
+
+
+    // Sorts an array of strings
+    static void sortPoliticianByName(Politician arr[],int n)
     {
-        int n = arrayToBeSorted.length;
+        // One by one move boundary of unsorted subarray
+        for(int i = 0; i < n - 1; i++) {
+            if (arr[i] != null) {
 
-        // One by one move boundary of unsorted array
-        for (int i = 0; i < n - 1; i++)
-        {
-            // Find the minimum element in unsorted array
-            int minimum = i;
-            for (int j = i+1; j < n; j++)
-                if (arrayToBeSorted[j].getPoliticianName().compareTo(arrayToBeSorted[minimum].getPoliticianName()) > 0)
-                    minimum = j;
+                // Find the minimum element in unsorted array
+                int minimum = i;
+                Politician minPolitician = arr[i];
+                for (int j = i + 1; j < n; j++) {
+                    if (arr[j] != null) {
 
-            // Swap the found minimum element with the first
-            // element
-            Politician temp = arrayToBeSorted[minimum];
-            arrayToBeSorted[minimum] = arrayToBeSorted[i];
-            arrayToBeSorted[i] = temp;
+            /*compareTo() will return a -ve value,
+            if string1 (arr[j]) is smaller than string2 (minStr)*/
+                        // If arr[j] is smaller than minStr
+
+                        if (arr[j].getPoliticianName().compareTo(minPolitician.getPoliticianName()) < 0) {
+                            // Make arr[j] as minStr and update min_idx
+                            minPolitician = arr[j];
+                            minimum = j;
+                        }
+                    }
+                }
+
+                // Swapping the minimum element
+                // found with the first element.
+                if (minimum != i) {
+                    Politician temp = arr[minimum];
+                    arr[minimum] = arr[i];
+                    arr[i] = temp;
+                }
+            }
         }
     }
 
