@@ -159,10 +159,8 @@ public class Controller implements Initializable {
 
 
     public void sortBy(ActionEvent actionEvent) {
-
-
         if (sortBy.getValue().toString().equals("Politician Name A-Z")) {
-            //sortPoliticianByName(PLL.politicianHead);
+            sortPoliticianByName(searchPoliticianArray);
 
         }
     }
@@ -347,69 +345,29 @@ public class Controller implements Initializable {
         }
 
 
-//    // method to swap nodes
-//    public politicianNode swapNodes(politicianNode curr_node1, politicianNode curr_node2, politicianNode prev_node) {
-//        // curr_node2 is new head
-//        politicianNode head_ref = curr_node2;
-//        // realign links
-//        prev_node.next = curr_node1;
-//
-//        // now swap next pointers of nodes
-//        politicianNode temp = curr_node2.next;
-//        curr_node2.next = curr_node1.next;
-//        curr_node1.next = temp;
-//        return head_ref;
-//    }
-//
-//    // sort the linked list using selection sort
-//    public politicianNode sortPoliticianByName( politicianNode head) {
-//        // only a single node in linked list
-//        if (head.next == null)
-//            return head;
-//
-//        // minNode => node with minimum data value
-//        politicianNode minNode = head;
-//
-//        // prevMin => node previous to minNode
-//        politicianNode prevMin = null;
-//        politicianNode ptr;
-//
-//        // traverse the list from head to last node
-//        for (ptr = head; ptr.next != null; ptr = ptr.next)   {
-//            // check if current node is minimum
-//            if (ptr.next.getContents().getPoliticianName().compareTo(minNode.getContents().getPoliticianName()) > 0)   {
-//                minNode = ptr.next;
-//                prevMin = ptr;
-//            }
-//        }
-//        // minimum node becomes head now
-//        if (minNode != head)
-//            head = swapNodes(head, minNode, prevMin);
-//
-//        // sort remaining list recursively
-//        head.next = sortPoliticianByName(head.next);
-//
-//        return head;
-//    }
-//
-//
-//    // sort the given linked list
-//    public politicianNode sort( politicianNode head_ref)
-//    {
-//        // linked list is empty
-//        if ((head_ref) == null)
-//            return null;
-//
-//        // call Selection_Sort method to sort the linked list
-//        head_ref = sortPoliticianByName(head_ref);
-//        return head_ref;
-//    }
+    public void sortPoliticianByName(Politician[] arrayToBeSorted)
+    {
+        int n = arrayToBeSorted.length;
+
+        // One by one move boundary of unsorted array
+        for (int i = 0; i < n - 1; i++)
+        {
+            // Find the minimum element in unsorted array
+            int minimum = i;
+            for (int j = i+1; j < n; j++)
+                if (arrayToBeSorted[j].getPoliticianName().compareTo(arrayToBeSorted[minimum].getPoliticianName()) > 0)
+                    minimum = j;
+
+            // Swap the found minimum element with the first
+            // element
+            Politician temp = arrayToBeSorted[minimum];
+            arrayToBeSorted[minimum] = arrayToBeSorted[i];
+            arrayToBeSorted[i] = temp;
+        }
+    }
 
 
-
-
-
-        public void reset (ActionEvent actionEvent) throws Exception {
+    public void reset (ActionEvent actionEvent) throws Exception {
             hash.fillPolitician();
             hash.fillElection();
             hash.saveElections();
