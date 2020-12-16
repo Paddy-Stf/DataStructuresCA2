@@ -171,9 +171,10 @@ public class Controller implements Initializable {
     public void drillDownElection() {
 
         TreeItem electionItems = new TreeItem("Elections");
+
         for (int i = 0; i < searchElectionArray.length; i++) {
-            while (searchElectionArray[i] != null) {
-                TreeItem electionView = new TreeItem(searchElectionArray.toString());
+            if (searchElectionArray[i] != null) {
+                TreeItem electionView = new TreeItem(searchElectionArray[i].toString());
                 electionItems.getChildren().add(electionView);
 
                 for (int j = 0; j < hash.candidatesArray.length; j++) {
@@ -199,7 +200,7 @@ public class Controller implements Initializable {
 
         for (int i = 0; i < searchPoliticianArray.length; i++) {
 
-            while (searchPoliticianArray[i] != null) {
+            if (searchPoliticianArray[i] != null) {
                 TreeItem politicianNameView = new TreeItem(searchPoliticianArray[i].getPoliticianName());
                 Politicians.getChildren().add(politicianNameView);
 
@@ -297,7 +298,7 @@ public class Controller implements Initializable {
         }
 
         for (int i = 0; i < searchPoliticianArray.length; i++) {
-            while (searchPoliticianArray[i] != null) {
+            if (searchPoliticianArray[i] != null) {
                 viewAll.getItems().add(searchPoliticianArray[i].toString());
             }
         }
@@ -314,7 +315,7 @@ public class Controller implements Initializable {
                 viewAll.getItems().add("Searched For     " + searchElectionType.getValue().toString() + "In" + searchElectionYear.getValue().toString());
                 for (int i = 0; i < hash.electionsArray.length; i++) {
                     if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString()) && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
-                        hash.electionsArray[j] = searchElectionArray[i];
+                        searchElectionArray[j] =  hash.electionsArray[i] ;
                         j++;
                     }
                 }
@@ -323,8 +324,7 @@ public class Controller implements Initializable {
                 viewAll.getItems().add("Searched For     " + searchElectionType.getValue().toString());
                 for (int i = 0; i < hash.electionsArray.length; i++) {
                     if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionType().equals(searchElectionType.getValue().toString())) {
-                        hash.electionsArray[j] = searchElectionArray[i];
-                        j++;
+                        searchElectionArray[j] =  hash.electionsArray[i] ;                        j++;
                     }
                 }
             }
@@ -332,14 +332,13 @@ public class Controller implements Initializable {
                 viewAll.getItems().add("Searched For  Elections in   " + searchElectionYear.getValue().toString());
                 for (int i = 0; i < hash.electionsArray.length; i++) {
                     if (hash.electionsArray[i] != null && hash.electionsArray[i].getElectionDate().contains(searchElectionYear.getValue().toString())) {
-                        hash.electionsArray[j] = searchElectionArray[i];
-                        j++;
+                        searchElectionArray[j] =  hash.electionsArray[i] ;                        j++;
                     }
                 }
             }
 
             for (int i = 0; i < searchElectionArray.length; i++) {
-                while (searchElectionArray[i] != null) {
+                if (searchElectionArray[i] != null) {
                     viewAll.getItems().add(searchElectionArray[i].toString());
                 }
             }
