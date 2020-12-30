@@ -83,14 +83,4 @@ public class Politician {
                 ", politicianPreviousParty : " + politicianPreviousParty ;
     }
 
-    public String toStringWithImage() {
-
-        return
-
-                "politicianName='" + politicianName + '\'' +
-                ", politicianDOB='" + politicianDOB + '\'' +
-                ", politicianCounty='" + politicianCounty + '\'' +
-                ", politicianCurrentParty='" + politicianCurrentParty + '\'' +
-                ", politicianPreviousParty='" + politicianPreviousParty + '\'' ;
-    }
 }

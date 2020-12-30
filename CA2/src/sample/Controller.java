@@ -17,8 +17,6 @@ public class Controller implements Initializable {
     String x = "x";
     String d = "";
     String c = "c";
-    searchPoliticianLinkedList PLL = new searchPoliticianLinkedList();
-    searchElectionLinkedList ELL = new searchElectionLinkedList();
 
 
     Election[] searchElectionArray = new Election[hash.electionArraySize];
@@ -49,7 +47,7 @@ public class Controller implements Initializable {
         searchElectionType.getItems().addAll("General elections", "Seanad elections", "European elections ", "Local elections ", "Presidential elections ", "Referendums");
         searchPoliticianParty.getItems().addAll("Fianna Fail", "Sinn Fein", " Fine Gael", "Green Party", "Labour Party", "Social Democrats", "Solidarity–People Before Profit", "Aontú Right To Change", "Independents", "Human Dignity Alliance", "Workers and Unemployed Action", "Workers Party", "Republican", "Independent Left", "Other");
         searchPoliticianLocation.getItems().addAll("Antrim", "Armagh ", "Cavan", "Derry", "Donegal", "Down", "Fermanagh", "Monaghan", "Tyrone", "Galway", "Leitrim", "Mayo", "Roscommon", "Sligo", "Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly", "Westmeath", "Wexford", "Wicklow", "Clare", "Cork", "Kerry", "Limerick", "Tipperary", "Waterford");
-        sortBy.getItems().addAll("Politician Name A-Z", "Election Year 2020-1990");
+        sortBy.getItems().addAll("Politician Name A-Z", "Election Type A-Z");
         politicianPreviousPartyList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         politicianPreviousPartyList.getItems().addAll("Fianna Fail", "Sinn Fein", " Fine Gael", "Green Party", "Labour Party", "Social Democrats", "Solidarity–People Before Profit", "Aontú Right To Change", "Independents", "Human Dignity Alliance", "Workers and Unemployed Action", "Workers Party", "Republican", "Independent Left", "Other");
 
@@ -170,8 +168,18 @@ public class Controller implements Initializable {
             }
             drillDownPolitician();
         }
-    }
+        if (sortBy.getValue().toString().equals("Election Type A-Z")) {
+            sortElectionByType(searchElectionArray, hash.electionArraySize);
 
+            viewAll.getItems().add("Sorted by Election Type");
+            for (int i = 0; i < searchElectionArray.length; i++) {
+                if (searchElectionArray[i] != null) {
+                    viewAll.getItems().add(searchElectionArray[i].toString());
+                }
+            }
+            drillDownElection();
+        }
+    }
 
 
     public void drillDownElection() {
@@ -411,6 +419,41 @@ public class Controller implements Initializable {
         }
     }
 
+
+    static void sortElectionByType(Election arr[],int n)
+    {
+        // One by one move boundary of unsorted subarray
+        for(int i = 0; i < n - 1; i++) {
+            if (arr[i] != null) {
+
+                // Find the minimum element in unsorted array
+                int minimum = i;
+                Election minElection = arr[i];
+                for (int j = i + 1; j < n; j++) {
+                    if (arr[j] != null) {
+
+            /*compareTo() will return a -ve value,
+            if string1 (arr[j]) is smaller than string2 (minStr)*/
+                        // If arr[j] is smaller than minStr
+
+                        if (arr[j].getElectionType().compareTo(minElection.getElectionType()) < 0) {
+                            // Make arr[j] as minStr and update min_idx
+                            minElection = arr[j];
+                            minimum = j;
+                        }
+                    }
+                }
+
+                // Swapping the minimum element
+                // found with the first element.
+                if (minimum != i) {
+                    Election temp = arr[minimum];
+                    arr[minimum] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+        }
+    }
 
     public void reset (ActionEvent actionEvent) throws Exception {
             hash.fillPolitician();
