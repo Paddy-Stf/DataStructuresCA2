@@ -24,6 +24,8 @@ public class Politician {
      * Getters and Setters of all politician fields.
      */
 
+    //getters
+
     public String getPoliticianName() {
         return politicianName;
     }
@@ -40,38 +42,48 @@ public class Politician {
         this.politicianDOB = politicianDOB;
     }
 
-
-    public String getPoliticianCounty() {
-        return politicianCounty;
-    }
-
     public void setPoliticianCounty(String politicianCounty) {
         this.politicianCounty = politicianCounty;
-    }
-
-    public String getPoliticianCurrentParty() {
-        return politicianCurrentParty;
     }
 
     public void setPoliticianCurrentParty(String politicianCurrentParty) {
         this.politicianCurrentParty = politicianCurrentParty;
     }
 
-    public String getPoliticianPreviousParty() {
-        return politicianPreviousParty;
-    }
-
-    public void setPoliticianPreviousParty(String politicianPreviousParty) {
-        this.politicianPreviousParty = politicianPreviousParty;
-    }
-
-    public String getPoliticianImage() {
-        return politicianImage;
+    public void setPoliticianPreviousParty(String politicianCurrentParty) {
+        this.politicianCurrentParty = politicianCurrentParty;
     }
 
     public void setPoliticianImage(String politicianImage) {
         this.politicianImage = politicianImage;
     }
+
+
+    //setters
+
+    public String getPoliticianCounty() {
+        return politicianCounty;
+    }
+
+
+
+    public String getPoliticianCurrentParty() {
+        return politicianCurrentParty;
+    }
+
+
+
+    public String getPoliticianPreviousParty() {
+        return politicianPreviousParty;
+    }
+
+
+
+    public String getPoliticianImage() {
+        return politicianImage;
+    }
+
+
 
     @Override
     public String toString() {

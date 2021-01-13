@@ -1,5 +1,9 @@
 package sample;
 
+/**
+ * Responsible for object Election and parameters of the class.
+ */
+
 public class Election {
 
     private  String  electionType;
@@ -13,6 +17,13 @@ public class Election {
         this.electionDate=electionDate;
         this.numSeats=numSeats;
     }
+
+
+    /**
+     * Getters and Setters for fields of Candidate class.
+     */
+
+    //getters
 
     public String getElectionType() {
         return electionType;
@@ -30,6 +41,8 @@ public class Election {
         return numSeats;
     }
 
+
+    //setters
 
     public void setNumSeats(int numSeats) {
         this.numSeats = numSeats;

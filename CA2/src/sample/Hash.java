@@ -168,7 +168,7 @@ public class Hash {
         int arrayIndexHash = hashIndex % 31;
 
         while (electionsArray[arrayIndexHash] != null) {
-            if (key.contains(electionsArray[arrayIndexHash].getElectionType()) && key.contains(electionsArray[arrayIndexHash].getElectionDate())) {
+            if (key2.contains(electionsArray[arrayIndexHash].getElectionType()) && key.contains(electionsArray[arrayIndexHash].getElectionDate())) {
                 // Found the key so return it
                 System.out.println(key + " was found in index " + arrayIndexHash);
                 return electionsArray[arrayIndexHash];

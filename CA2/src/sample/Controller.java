@@ -102,14 +102,13 @@ public class Controller implements Initializable {
     }
 
     public void updateElection(ActionEvent actionEvent) {
-        Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionType(), readInElection().getElectionDate());
-        if (readInElection().getElectionLocation().equals(electionToBeUpdated.getElectionLocation())) {
-            electionToBeUpdated.setElectionDate(electionDate.getText());
-            electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
-            electionToBeUpdated.setElectionType(electionType.getValue().toString());
-            electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
-        } else errorPopOut("No Election Matching Election Type & Location");
+        Election electionToBeUpdated = hash.findElectionKey(readInElection().getElectionDate() , readInElection().getElectionType());
+        electionToBeUpdated.setElectionLocation(electionLocation.getValue().toString());
+        electionToBeUpdated.setElectionType(electionType.getValue().toString());
+        electionToBeUpdated.setElectionDate(electionDate.getText());
+        electionToBeUpdated.setNumSeats(Integer.parseInt(electionSeats.getText()));
     }
+
 
 
     public void addCandidate(ActionEvent actionEvent) {
@@ -359,28 +358,6 @@ public class Controller implements Initializable {
 
         drillDownElection();
         }
-
-
-//    public void sortPoliticianByName(Politician[] arrayToBeSorted)
-//    {
-//        int n = arrayToBeSorted.length;
-//
-//        // One by one move boundary of unsorted array
-//        for (int i = 0; i < n - 1; i++)
-//        {
-//            // Find the minimum element in unsorted array
-//            int minimum = i;
-//            for (int j = i + 1; j < n; j++)
-//                if (arrayToBeSorted[j].getPoliticianName().compareTo(arrayToBeSorted[minimum].getPoliticianName()) > 0)
-//                    minimum = j;
-//
-//            // Swap the found minimum element with the first
-//            // element
-//            Politician temp = arrayToBeSorted[minimum];
-//            arrayToBeSorted[minimum] = arrayToBeSorted[i];
-//            arrayToBeSorted[i] = temp;
-//        }
-//    }
 
 
     // Sorts an array of strings
