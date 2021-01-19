@@ -1,0 +1,40 @@
+<object-stream>
+  <sample.Election-array>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <sample.Election>
+      <electionType>General elections</electionType>
+      <electionLocation>Kerry</electionLocation>
+      <electionDate>13/04/2000</electionDate>
+      <numSeats>12</numSeats>
+    </sample.Election>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+  </sample.Election-array>
+</object-stream>

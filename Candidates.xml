@@ -1,0 +1,51 @@
+<object-stream>
+  <sample.Candidate-array>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <null/>
+    <sample.Candidate>
+      <candidate>
+        <politicianName>john</politicianName>
+        <politicianDOB>13/04/200</politicianDOB>
+        <politicianCounty>Waterford</politicianCounty>
+        <politicianCurrentParty>Fianna Fail</politicianCurrentParty>
+        <politicianPreviousParty>[ Fine Gael]</politicianPreviousParty>
+        <politicianImage>https://i.guim.co.uk/img/media/2cc5d6606c0cf7e7b08eb6e83535d64f8c19f60a/0_0_6000_3600/master/6000.jpg?width=445&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=bde0b0969c2b6a95327c14a113d723f3</politicianImage>
+      </candidate>
+      <election>
+        <electionType>General elections</electionType>
+        <electionLocation>Kerry</electionLocation>
+        <electionDate>13/04/2000</electionDate>
+        <numSeats>12</numSeats>
+      </election>
+      <candidateVotes>12</candidateVotes>
+    </sample.Candidate>
+    <null/>
+    <null/>
+    <null/>
+  </sample.Candidate-array>
+</object-stream>
